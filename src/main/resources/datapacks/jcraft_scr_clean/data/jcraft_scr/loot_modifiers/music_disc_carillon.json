@@ -1,0 +1,7 @@
+{
+  "type": "jcraft_scr:add_item_chance",
+  "conditions": [],
+  "item": "jcraft_scr:music_disc_carillon",
+  "chance": 0.0,
+  "tables": []
+}

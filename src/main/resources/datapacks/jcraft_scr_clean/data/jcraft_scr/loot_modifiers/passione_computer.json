@@ -1,0 +1,7 @@
+{
+  "type": "jcraft_scr:add_item_chance",
+  "conditions": [],
+  "item": "jcraft_scr:passione_computer",
+  "chance": 0.0,
+  "tables": []
+}
