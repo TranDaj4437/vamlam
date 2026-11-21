@@ -1,4 +1,4 @@
-# MoreJcraft (by trandaj4437) — v4.13.1 (Forge 1.20.1)
+# MoreJcraft (by trandaj4437) — v4.13.2 (Forge 1.20.1)
 
 All-in-one custom **Minecraft Forge 1.20.1** (`47.4.28`, Java 17, `mod_id: jcraftnodashbhop`) mod built via GitHub Actions (Gradle 8.8 + JDK 17), designed for **JCraft 0.18.2**, **TaCZ 1.2.0-hotfix**, **Shoulder Surfing Reloaded 5.3.1**, **Third Person Shooting: Zero 6.0.1**, **Custom Crosshair Mod 1.5.5**, and **Silver Chariot Requiem Addon 1.5.3** (+ AzureLib 3.2.9).
 
@@ -67,7 +67,7 @@ All-in-one custom **Minecraft Forge 1.20.1** (`47.4.28`, Java 17, `mod_id: jcraf
 
 1. Upload/push this repository to GitHub (includes `.github/workflows/build.yml`).
 2. Open the **Actions** tab → **Build MoreJcraft (Forge 1.20.1)** runs automatically on push (JDK 17 + Gradle 8.8).
-3. Download the built `.jar` from the **`MoreJcraft-v4.13.1-1.20.1`** artifact and place it in both client and server `mods/` folders.
+3. Download the built `.jar` from the **`MoreJcraft-v4.13.2-1.20.1`** artifact and place it in both client and server `mods/` folders.
 
 ---
 

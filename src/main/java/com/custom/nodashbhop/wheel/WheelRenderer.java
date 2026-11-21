@@ -90,11 +90,11 @@ public final class WheelRenderer {
 
         ItemStack hubItem = controller.getCenterHubItemStack();
         if (!hubItem.isEmpty()) {
-            pose.pushPose();
-            pose.translate(centerX - 14.0F, centerY - 14.0F, 0.0F);
-            pose.scale(1.75F, 1.75F, 1.0F);
+            gui.pose().pushPose();
+            gui.pose().translate(centerX - 14.0F, centerY - 14.0F, 0.0F);
+            gui.pose().scale(1.75F, 1.75F, 1.0F);
             gui.renderItem(hubItem, 0, 0);
-            pose.popPose();
+            gui.pose().popPose();
         } else {
             MoveSlotData hubData = controller.getCenterHubSlotData();
             ResourceLocation centerIcon = hubData != null ? hubData.getDisplayIcon(false) : null;
