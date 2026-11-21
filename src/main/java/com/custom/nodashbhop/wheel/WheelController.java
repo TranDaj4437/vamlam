@@ -144,6 +144,7 @@ public class WheelController {
             return active;
         }
 
+        Minecraft mc = Minecraft.getInstance();
         String standId = mc.player != null ? JCraftStandCheck.getStandId(mc.player).toLowerCase(java.util.Locale.ROOT) : "";
         for (int i = 1; i < 8; i++) {
             if (isSlotRemovedForStand(standId, slots[i].slot)) continue;
@@ -181,6 +182,7 @@ public class WheelController {
     private static final ResourceLocation SPEC_ICON_ANUBIS = new ResourceLocation("jcraft", "textures/item/anubis.png");
 
     public MoveSlotData getCenterHubSlotData() {
+        Minecraft mc = Minecraft.getInstance();
         if (specMode && mc.player != null) {
             ResourceLocation specHubIcon = resolveSpecCenterIcon(JCraftStandCheck.getSpecId(mc.player));
             if (specHubIcon != null) {
@@ -188,7 +190,7 @@ public class WheelController {
                 custom.present = true;
                 custom.normalIcon = specHubIcon;
                 custom.crouchIcon = specHubIcon;
-                custom.normalName = getActiveEntityDisplayName();
+                custom.normalName = JCraftStandCheck.getSpecId(mc.player);
                 return custom;
             }
         }
@@ -206,6 +208,7 @@ public class WheelController {
      * Returns ItemStack.EMPTY for Hamon and all Stands.
      */
     public ItemStack getCenterHubItemStack() {
+        Minecraft mc = Minecraft.getInstance();
         if (!specMode || mc.player == null) return ItemStack.EMPTY;
         String key = JCraftStandCheck.getSpecId(mc.player).toLowerCase(java.util.Locale.ROOT);
         ResourceLocation itemId = null;
