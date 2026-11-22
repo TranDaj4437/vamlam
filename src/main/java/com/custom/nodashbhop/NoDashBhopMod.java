@@ -29,6 +29,7 @@ public class NoDashBhopMod {
 
     public NoDashBhopMod() {
         FMLJavaModLoadingContext.get().getModEventBus().addListener(BuiltinSkinPackRegistrar::onAddPackFinders);
+        FMLJavaModLoadingContext.get().getModEventBus().register(new ScrCreativeTabCleaner());
         CombinedNetwork.register();
         MinecraftForge.EVENT_BUS.register(new NoDashServerHandler());
         MinecraftForge.EVENT_BUS.register(new StandArrowSkinHandler());

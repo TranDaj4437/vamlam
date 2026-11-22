@@ -64,6 +64,8 @@ public class WheelController {
     private boolean hadStandPreviously = false;
 
     private String lastActiveEntityKey = "";
+    private String lastKnownStandFullId = "";
+    private int lastStandEntityId = -1;
     private boolean hadSummonedEntity = false;
     private int refreshCooldownTicks = 0;
 
@@ -342,6 +344,8 @@ public class WheelController {
         if (mc.player == null || mc.level == null) {
             cooldowns.resetAll();
             lastActiveEntityKey = "";
+            lastKnownStandFullId = "";
+            lastStandEntityId = -1;
             hadSummonedEntity = false;
             hadStandPreviously = false;
             heldCastSlot = null;
@@ -356,9 +360,11 @@ public class WheelController {
 
         boolean hasStand = JCraftStandCheck.hasStand(mc.player);
         boolean hasSpec = JCraftStandCheck.hasSpec(mc.player);
+        String currentStandFullId = hasStand ? JCraftStandCheck.getStandFullId(mc.player) : "none";
+        boolean standChanged = hasStand && !currentStandFullId.equals(lastKnownStandFullId);
 
-        // Default to STAND whenever player acquires/has a Stand
-        if (hasStand && !hadStandPreviously) {
+        // Default to STAND whenever player acquires a Stand OR swaps to a new Stand via Stand Arrow / evolution
+        if ((hasStand && !hadStandPreviously) || standChanged) {
             specMode = false;
         } else if (!specMode && !hasStand && hasSpec) {
             specMode = true;
@@ -366,21 +372,29 @@ public class WheelController {
             specMode = false;
         }
         hadStandPreviously = hasStand;
+        lastKnownStandFullId = currentStandFullId;
 
         String activeId = specMode
                 ? "SPEC:" + JCraftStandCheck.getSpecFullId(mc.player)
-                : "STAND:" + JCraftStandCheck.getStandFullId(mc.player);
+                : "STAND:" + currentStandFullId;
 
+        Object standEnt = JCraftStandCheck.getStandEntity(mc.player);
+        int curStandEntId = (standEnt instanceof net.minecraft.world.entity.Entity e) ? e.getId() : -1;
         boolean summonedNow = specMode
                 ? (JCraftStandCheck.getSpecInstance(mc.player) != null)
-                : (JCraftStandCheck.getStandEntity(mc.player) != null);
+                : (standEnt != null);
 
-        if (!activeId.equals(lastActiveEntityKey)) {
+        if (!activeId.equals(lastActiveEntityKey) || standChanged) {
             lastActiveEntityKey = activeId;
+            lastStandEntityId = curStandEntId;
             hadSummonedEntity = summonedNow;
             if (hasStand || hasSpec) {
                 forceRefresh(mc, true);
             }
+        } else if (!specMode && curStandEntId != -1 && curStandEntId != lastStandEntityId) {
+            lastStandEntityId = curStandEntId;
+            hadSummonedEntity = true;
+            iconResolver.populateSlots(mc.player, false, slots, true);
         } else if (summonedNow && !hadSummonedEntity) {
             hadSummonedEntity = true;
             iconResolver.populateSlots(mc.player, specMode, slots, false);
